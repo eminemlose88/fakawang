@@ -57,48 +57,48 @@ export default function BuyForm({ good, pays }: { good: any, pays: any[] }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-3 rounded text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded text-sm">
           {error}
         </div>
       )}
 
       <div>
-        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">电子邮箱</label>
+        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">电子邮箱</label>
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-black/50 border border-white/10 text-white px-4 py-3 rounded focus:outline-none focus:border-sl-blue focus:shadow-[0_0_10px_rgba(0,234,255,0.2)] transition-all placeholder-gray-600"
+          className="w-full bg-gray-50 border border-gray-200 text-gray-900 px-4 py-3 rounded focus:outline-none focus:border-sl-blue focus:ring-1 focus:ring-sl-blue transition-all placeholder-gray-400"
           placeholder="请输入您的邮箱"
         />
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">购买数量</label>
+        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">购买数量</label>
         <input
           type="number"
           min="1"
           max={good.inStock}
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full bg-black/50 border border-white/10 text-white px-4 py-3 rounded focus:outline-none focus:border-sl-blue focus:shadow-[0_0_10px_rgba(0,234,255,0.2)] transition-all"
+          className="w-full bg-gray-50 border border-gray-200 text-gray-900 px-4 py-3 rounded focus:outline-none focus:border-sl-blue focus:ring-1 focus:ring-sl-blue transition-all"
         />
-        <p className="text-[10px] text-gray-500 mt-2 font-mono uppercase tracking-wide">
-          库存: <span className={good.inStock > 0 ? "text-sl-blue" : "text-red-500"}>{good.inStock}</span>
+        <p className="text-[10px] text-gray-400 mt-2 font-mono uppercase tracking-wide">
+          库存: <span className={good.inStock > 0 ? "text-green-600 font-bold" : "text-red-500 font-bold"}>{good.inStock}</span>
         </p>
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">支付方式</label>
+        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">支付方式</label>
         <div className="relative">
           <select
             value={payId}
             onChange={(e) => setPayId(e.target.value)}
-            className="w-full bg-black/50 border border-white/10 text-white px-4 py-3 rounded appearance-none focus:outline-none focus:border-sl-blue focus:shadow-[0_0_10px_rgba(0,234,255,0.2)] transition-all cursor-pointer"
+            className="w-full bg-gray-50 border border-gray-200 text-gray-900 px-4 py-3 rounded appearance-none focus:outline-none focus:border-sl-blue focus:ring-1 focus:ring-sl-blue transition-all cursor-pointer"
           >
             {pays.map((pay: any) => (
-              <option key={pay.id} value={pay.id} className="bg-gray-900 text-white">
+              <option key={pay.id} value={pay.id} className="bg-white text-gray-900">
                 {pay.payName}
               </option>
             ))}
@@ -111,16 +111,16 @@ export default function BuyForm({ good, pays }: { good: any, pays: any[] }) {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-white/5">
+      <div className="pt-6 border-t border-gray-100">
         <div className="flex justify-between items-end mb-6">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">总金额</span>
-          <span className="text-3xl font-black text-white glow-text">${Number(good.actualPrice).toFixed(2)}</span>
+          <span className="text-3xl font-black text-gray-900">${Number(good.actualPrice).toFixed(2)}</span>
         </div>
 
         <button
           type="submit"
           disabled={loading || good.inStock <= 0}
-          className="w-full py-4 px-6 bg-white text-black font-black uppercase tracking-widest rounded hover:bg-sl-blue transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(0,234,255,0.6)] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-4 px-6 bg-gray-900 text-white font-black uppercase tracking-widest rounded hover:bg-sl-blue transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? '处理中...' : (good.inStock <= 0 ? '缺货' : '立即支付')}
         </button>
