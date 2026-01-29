@@ -54,7 +54,8 @@ export default function GoodsList() {
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">ID</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">名称</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">分组</th>
-              <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">价格</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">展示价格 (RMB)</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">结算价格 (USD)</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">库存</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">状态</th>
               <th className="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">操作</th>
@@ -79,7 +80,8 @@ export default function GoodsList() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{good.group?.gpName || '-'}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${Number(good.actualPrice).toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">¥{Number(good.retailPrice).toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">${Number(good.actualPrice).toFixed(2)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {good.type === 1 ? (
                       <span className={`font-medium ${good.inStock < 10 ? 'text-red-600' : 'text-green-600'}`}>

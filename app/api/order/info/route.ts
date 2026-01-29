@@ -14,6 +14,11 @@ export async function POST(req: Request) {
             payName: true,
             payCheck: true
           }
+        },
+        goods: {
+          select: {
+            retailPrice: true
+          }
         }
       }
     })

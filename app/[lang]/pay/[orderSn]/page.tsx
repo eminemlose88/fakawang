@@ -8,9 +8,13 @@ interface Order {
   orderSn: string
   title: string
   actualPrice: string
+  buyAmount: number
   pay: {
     payCheck: string
     payName: string
+  }
+  goods: {
+    retailPrice: string
   }
 }
 
@@ -123,7 +127,10 @@ export default function Cashier(props: { params: Promise<{ orderSn: string }> })
                 </div>
                 <div className="flex justify-between items-center">
                     <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">金额</span>
-                    <span className="font-black text-2xl text-sl-blue glow-text">${Number(order.actualPrice).toFixed(2)}</span>
+                    <div className="text-right">
+                        <div className="font-black text-2xl text-sl-blue glow-text">¥{(Number(order.goods.retailPrice) * order.buyAmount).toFixed(2)}</div>
+                        <div className="text-[10px] text-gray-500 font-mono">结算金额: ${Number(order.actualPrice).toFixed(2)} USD</div>
+                    </div>
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-white/5">
                     <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">支付方式</span>

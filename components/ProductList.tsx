@@ -8,7 +8,8 @@ type Good = {
   gdName: string
   gdDescription: string
   picture: string | null
-  actualPrice: any // Decimal
+  retailPrice: any // Decimal (RMB)
+  actualPrice: any // Decimal (USD)
   inStock: number
   type: number
   groupId: number
@@ -125,7 +126,7 @@ export default function ProductList({ goods, groups, dict }: { goods: Good[], gr
                   <div className="flex flex-col">
                      <span className="text-xs text-gray-400 mb-1 font-mono uppercase tracking-tighter">Price</span>
                      <span className="text-xl font-black text-gray-900 group-hover:text-sl-blue transition-colors">
-                       ${Number(good.actualPrice).toFixed(2)}
+                       ¥{Number(good.retailPrice).toFixed(2)}
                      </span>
                   </div>
                   <Link 

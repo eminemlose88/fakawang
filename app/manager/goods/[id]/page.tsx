@@ -146,10 +146,10 @@ export default function GoodsForm(props: { params: Promise<{ id: string }> }) {
 
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">原价</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1">展示价格 (人民币 ¥)</label>
             <div className="relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-gray-500 sm:text-sm">$</span>
+                  <span className="text-gray-500 sm:text-sm">¥</span>
                 </div>
                 <input
                   type="number"
@@ -157,11 +157,12 @@ export default function GoodsForm(props: { params: Promise<{ id: string }> }) {
                   value={form.retailPrice}
                   onChange={e => setForm({...form, retailPrice: e.target.value})}
                   className="block w-full rounded-md border-gray-300 pl-7 focus:border-blue-500 focus:ring-blue-500 border p-2.5 bg-gray-50 text-gray-900"
+                  placeholder="前端显示的金额"
                 />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">实际价格</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1">结算价格 (美元 $)</label>
             <div className="relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <span className="text-gray-500 sm:text-sm">$</span>
@@ -173,6 +174,7 @@ export default function GoodsForm(props: { params: Promise<{ id: string }> }) {
                   value={form.actualPrice}
                   onChange={e => setForm({...form, actualPrice: e.target.value})}
                   className="block w-full rounded-md border-gray-300 pl-7 focus:border-blue-500 focus:ring-blue-500 border p-2.5 bg-gray-50 text-gray-900"
+                  placeholder="实际支付的美元金额"
                 />
             </div>
           </div>

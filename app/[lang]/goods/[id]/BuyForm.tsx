@@ -114,7 +114,7 @@ export default function BuyForm({ good, pays }: { good: any, pays: any[] }) {
       <div className="pt-6 border-t border-gray-100">
         <div className="flex justify-between items-end mb-6">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">总金额</span>
-          <span className="text-3xl font-black text-gray-900">${Number(good.actualPrice).toFixed(2)}</span>
+          <span className="text-3xl font-black text-gray-900">¥{(Number(good.retailPrice) * amount).toFixed(2)}</span>
         </div>
 
         <button
