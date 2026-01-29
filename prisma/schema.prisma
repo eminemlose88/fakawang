@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  name      String
+  avatar    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("admin_users")
+}
+
+model GoodsGroup {
+  id        Int      @id @default(autoincrement())
+  gpName    String   @map("gp_name")
+  isOpen    Int      @default(1) @map("is_open")
+  ord       Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  goods     Goods[]
+
+  @@map("goods_group")
+}
+
+model Goods {
+  id            Int        @id @default(autoincrement())
+  groupId       Int        @map("group_id")
+  gdName        String     @map("gd_name")
+  gdDescription String     @map("gd_description")
+  gdKeywords    String     @map("gd_keywords")
+  picture       String?
+  retailPrice   Decimal    @default(0.00) @map("retail_price")
+  actualPrice   Decimal    @default(0.00) @map("actual_price")
+  inStock       Int        @default(0) @map("in_stock")
+  salesVolume   Int        @default(0) @map("sales_volume")
+  ord           Int        @default(1)
+  buyLimitNum   Int        @default(0) @map("buy_limit_num")
+  buyPrompt     String?    @map("buy_prompt")
+  description   String?
+  type          Int        @default(1)
+  isOpen        Int        @default(1) @map("is_open")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+  carmis        Carmi[]
+  group         GoodsGroup @relation(fields: [groupId], references: [id])
+  orders        Order[]
+
+  @@map("goods")
+}
+
+model Carmi {
+  id        Int      @id @default(autoincrement())
+  goodsId   Int      @map("goods_id")
+  status    Int      @default(1)
+  carmi     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  orderId   Int?     @map("order_id")
+  goods     Goods    @relation(fields: [goodsId], references: [id])
+  order     Order?   @relation(fields: [orderId], references: [id])
+
+  @@map("carmis")
+}
+
+model Order {
+  id          Int      @id @default(autoincrement())
+  orderSn     String   @unique @map("order_sn")
+  goodsId     Int      @map("goods_id")
+  title       String
+  type        Int      @default(1)
+  goodsPrice  Decimal  @default(0.00) @map("goods_price")
+  buyAmount   Int      @default(1) @map("buy_amount")
+  totalPrice  Decimal  @default(0.00) @map("total_price")
+  actualPrice Decimal  @default(0.00) @map("actual_price")
+  email       String
+  info        String?
+  payId       Int?     @map("pay_id")
+  buyIp       String   @map("buy_ip")
+  tradeNo     String?  @default("") @map("trade_no")
+  status      Int      @default(1)
+  searchPwd   String?  @map("search_pwd")
+  paymentAddress String? @map("payment_address")
+  actualPaymentAmount Decimal? @map("actual_payment_amount")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  goods       Goods    @relation(fields: [goodsId], references: [id])
+  pay         Pay?     @relation(fields: [payId], references: [id])
+  carmis      Carmi[]
+
+  @@map("orders")
+}
+
+model Pay {
+  id             Int      @id @default(autoincrement())
+  payName        String   @map("pay_name")
+  payCheck       String   @unique @map("pay_check")
+  payMethod      Int      @map("pay_method")
+  merchantId     String?  @map("merchant_id")
+  merchantKey    String?  @map("merchant_key")
+  merchantPem    String?  @map("merchant_pem")
+  payHandleroute String   @map("pay_handleroute")
+  isOpen         Int      @default(1) @map("is_open")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  orders         Order[]
+
+  @@map("pays")
+}
+
+model SystemSetting {
+  slug      String   @id
+  value     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  title     String
+  excerpt   String?
+  content   String   @db.Text
+  author    String   @default("Admin")
+  tags      String?
+  published Boolean  @default(true)
+  views     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("posts")
+}

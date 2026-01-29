@@ -1,0 +1,83 @@
+# Fakawang 2.0 - Secure Nginx Configuration Example
+# 
+# This configuration file provides a security-hardened setup for your Next.js application.
+# It implements:
+# 1. Reverse Proxy (hides backend port)
+# 2. Access Control for Admin Path (IP Whitelist)
+# 3. Security Headers (HSTS, X-Frame-Options, etc.)
+# 4. Static Asset Caching
+#
+# Usage:
+# 1. Install Nginx
+# 2. Copy this file to /etc/nginx/sites-available/fakawang
+# 3. Create symlink: ln -s /etc/nginx/sites-available/fakawang /etc/nginx/sites-enabled/
+# 4. Test config: nginx -t
+# 5. Reload nginx: systemctl reload nginx
+
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    # SSL Certificates (Use Certbot to generate these)
+    # ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+
+    # Security Headers
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    add_header Referrer-Policy "strict-origin-when-cross-origin";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # Proxy Configuration
+    location / {
+        proxy_pass http://localhost:3000; # Your Next.js app port
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # Timeout settings
+        proxy_read_timeout 60s;
+        proxy_connect_timeout 60s;
+    }
+
+    # Admin Path Protection (Renamed from /admin to /manager)
+    # OPTIONAL: Restrict access to specific IPs
+    location /manager {
+        # allow 123.456.78.9;  # Your Office IP
+        # allow 10.0.0.0/8;    # Internal Network
+        # deny all;            # Deny everyone else
+
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Static Asset Caching (Next.js _next/static)
+    location /_next/static {
+        proxy_pass http://localhost:3000;
+        expires 365d;
+        access_log off;
+    }
+
+    # Public Assets
+    location /public {
+        proxy_pass http://localhost:3000;
+        expires 7d;
+        access_log off;
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "home": {
+    "title": "欢迎",
+    "search_placeholder": "搜索商品...",
+    "all": "全部",
+    "buy": "购买",
+    "stock": "库存",
+    "in_stock": "库存充足",
+    "out_of_stock": "暂时缺货",
+    "no_products": "未找到匹配的商品。"
+  },
+  "nav": {
+    "home": "首页",
+    "order_search": "订单查询"
+  },
+  "order_search": {
+    "title": "订单查询",
+    "placeholder": "输入订单号或邮箱",
+    "search_btn": "查询",
+    "no_results": "未找到匹配的订单",
+    "quantity": "数量",
+    "total_price": "总价",
+    "date": "日期",
+    "payment": "支付方式",
+    "order_info": "订单信息 / 卡密:",
+    "pay_now": "立即支付",
+    "recent_orders": "最近查询记录",
+    "clear_history": "清空记录"
+  }
+}

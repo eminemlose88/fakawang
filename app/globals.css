@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  /* Modern Light Theme Colors */
+  --sl-dark: #F9FAFB;       /* Light Gray Background */
+  --sl-card: #FFFFFF;       /* Card Background */
+  --sl-blue: #0070F3;       /* Professional Blue */
+  --sl-purple: #7928CA;     /* Accents */
+  --sl-text: #111827;       /* Primary Text (Very Dark Gray) */
+  --sl-text-muted: #4B5563; /* Secondary Text (Medium Gray) */
+  
+  --background: var(--sl-dark);
+  --foreground: var(--sl-text);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Custom Colors */
+  --color-sl-dark: var(--sl-dark);
+  --color-sl-card: var(--sl-card);
+  --color-sl-blue: var(--sl-blue);
+  --color-sl-purple: var(--sl-purple);
+  --color-sl-text: var(--sl-text);
+  --color-sl-text-muted: var(--sl-text-muted);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Utilities */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 112, 243, 0.2);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 10px rgba(121, 40, 202, 0.2);
+}
+
+.border-glow {
+  box-shadow: 0 0 15px rgba(0, 112, 243, 0.1);
+}
+
+.card-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px);
+  border-color: var(--sl-blue);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-blue); 
+}

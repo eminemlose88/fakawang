@@ -1,0 +1,35 @@
+# GitHub 推送文件清单
+
+以下是按提交顺序排列的修改文件列表，供您参考。
+
+## 1. Initial commit (2583ed6)
+* 项目初始化，包含所有基础文件 (Next.js 结构, 组件, 页面等)
+* `.gitignore`
+* `README.md`
+* `app/` (所有页面和 API 路由)
+* `components/` (所有组件)
+* `lib/` (工具函数)
+* `prisma/` (数据库配置)
+* `public/` (静态资源)
+* `dictionaries/` (语言包)
+* 配置文件: `package.json`, `next.config.ts`, `tailwind.config.ts`, `tsconfig.json` 等
+
+## 2. Fix build errors and dependencies (6c23e40)
+* `package.json`: 修复依赖配置，移动 `@prisma/client` 到 dependencies
+* `app/api/admin/carmis/route.ts`: 修复 Prisma `createMany` 在 SQLite 下的兼容性问题
+
+## 3. Migrate database to Supabase and update environment config (951ce9b)
+* `prisma/schema.prisma`: 切换数据库提供程序为 PostgreSQL，配置 Supabase 连接
+* `package.json`: 添加 `@vercel/blob` 依赖
+* `package-lock.json`: 锁定依赖版本
+* `.gitignore`: 更新忽略规则
+* `blob.txt`: (新文件)
+* `supabase.txt`: (新文件)
+
+## 4. Add admin password change functionality (3822417)
+* `app/admin/settings/page.tsx`: 添加修改密码的前端表单
+* `app/api/admin/change-password/route.ts`: (新文件) 添加修改密码的后端 API
+
+## 5. Fix password change API and frontend state (0f907a2)
+* `app/admin/settings/page.tsx`: 修复 `passwordForm` 状态丢失的 Bug
+* `app/api/admin/change-password/route.ts`: 修复 `verifySession` 引用错误，改为 `getSession`
